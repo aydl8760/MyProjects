@@ -60,6 +60,13 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
+app.get("/profile", (req, res) => {
+  res.json({
+    name: "Marta",
+    age: "22",
+  });
+});
+
 app.use((_, res) => {
   res.status(404).send("Route Not Found");
 });
