@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const PORT = 5001;
 
+app.use(express.json());
+
 const users = [
   { id: 1, name: "Sara" },
   { id: 2, name: "Mekdes" },
@@ -65,6 +67,49 @@ app.get("/profile", (req, res) => {
     name: "Marta",
     age: "22",
   });
+});
+
+app.post("/users", (req, res) => {
+  const newUser = req.body;
+  users.push(newUser);
+
+  res.json({
+    message: "new user created successfully",
+    users,
+  });
+});
+
+app.put("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const createdUser = req.body;
+
+  const idIndex = users.findIndex((uid) => uid.id === parseInt(id));
+
+  if (idIndex !== -1) {
+    users[idIndex] = createdUser;
+    res.json({
+      message: "updated ",
+      users,
+    });
+  } else {
+    res.status(404).send("id Not Found");
+  }
+});
+
+app.delete("/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  const index = users.findIndex((uid) => uid.id === parseInt(id));
+  if (index !== -1) {
+    const removedId = users.splice(index, 1);
+    res.json({
+      message: "deleted",
+      users,
+      removedId,
+    });
+  } else {
+    res.status(404).send("id Not Found");
+  }
 });
 
 app.use((_, res) => {
