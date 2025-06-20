@@ -11,11 +11,17 @@ const users = [
   { id: 3, name: "Liya" },
 ];
 
+const products = [
+  { id: 1, name: "Laptop", price: 3000 },
+  { id: 2, name: "Phone", price: 2000 },
+  { id: 3, name: "Headphones", price: 850 },
+];
+
 app.get("/contact", (req, res) => {
   res.send("Call at +21234567 ");
 });
 
-app.get("/products", (req, res) => {
+app.get("/product", (req, res) => {
   res.json([
     {
       id: 1,
@@ -109,6 +115,55 @@ app.delete("/users/:id", (req, res) => {
     });
   } else {
     res.status(404).send("id Not Found");
+  }
+});
+
+app.get("/products", (req, res) => {
+  res.json(products);
+});
+
+app.post("/products", (req, res) => {
+  const newProduct = req.body;
+  products.push(newProduct);
+
+  res.json({
+    message: "new product created successfully",
+    products,
+  });
+});
+
+app.put("/products/:id", (req, res) => {
+  const { id } = req.params;
+  const updated = req.body;
+
+  const prod = products.find((uid) => uid.id === parseInt(id));
+
+  if (!prod) {
+    return res.status(404).send("product Not Found");
+  }
+
+  prod.name = updated.name || prod?.name;
+  prod.price = updated.price || prod?.price;
+
+  res.json({
+    message: "updated succesfuly",
+    products,
+  });
+});
+
+app.delete("/products/:id", (req, res) => {
+  const { id } = req.params;
+
+  const prodIndex = products.findIndex((uid) => uid.id === parseInt(id));
+
+  if (prodIndex !== -1) {
+    products.splice(prodIndex, 1);
+    res.json({
+      message: "product delted successfully",
+      products,
+    });
+  } else {
+    return res.status(404).send("product Not Found");
   }
 });
 
