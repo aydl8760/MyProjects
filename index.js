@@ -167,6 +167,53 @@ app.delete("/products/:id", (req, res) => {
   }
 });
 
+app.get("/search", (req, res) => {
+  const name = req.query.n;
+  const age = req.query.a;
+
+  res.send(`search result Name = ${name} and age = ${age}`);
+});
+
+const validate = (req, res, next) => {
+  const id = req.params.id;
+  if (isNaN(id)) {
+    res.status(400).send("invlaid id. must be a number");
+  }
+  next();
+};
+
+app.get("/check/:id", validate, (req, res) => {
+  res.send(` id ${req.params.id} is valid`);
+});
+
+app.get("/profile/:username", (req, res) => {
+  const username = req.params.username;
+
+  res.send(`hello ${username}`);
+});
+
+const validateParam = (req, res, next) => {
+  const block = req.params.block;
+  if (block) {
+    res.status(400).send("is not allowed");
+  }
+
+  next();
+};
+
+app.get("/:block", validateParam, (req, res) => {
+  res.send("welcome");
+});
+
+app.get("/filter", (req, res) => {
+  const role = req.query.role;
+  if (role === "admin") {
+    res.send(`filtering for role :${role}`);
+  } else {
+    res.send("it is not admin");
+  }
+});
+
 app.use((_, res) => {
   res.status(404).send("Route Not Found");
 });
