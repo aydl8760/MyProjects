@@ -14,9 +14,10 @@ export default function FilterUsers({ filters, setFilters }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
     const urlParams = new URLSearchParams();
 
-    //urlParams.set("name", filters.name);
+    urlParams.set("name", filters.name);
 
     if (filters.minAge) {
       urlParams.set("minAge", filters.minAge);

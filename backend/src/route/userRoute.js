@@ -10,7 +10,11 @@ const {
   deleteUser,
   deleteUnderageUsers,
   getAllUsers,
+  handleImageUpload,
 } = require("../controllers/userControllers");
+const { upload } = require("../../config/cloudinary");
+
+router.post("/uploadImage", upload.single("myFile"), handleImageUpload);
 
 router.post("/", createUser);
 

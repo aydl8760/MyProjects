@@ -1,10 +1,32 @@
+const { imageUploadUtil } = require("../../config/cloudinary");
 const User = require("../model/User");
+
+const handleImageUpload = async (req, res) => {
+  try {
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    const url = `data:${req.file.mimetype};base64,${b64}`;
+    const result = await imageUploadUtil(url);
+
+    res.json({
+      success: true,
+      result,
+    });
+  } catch (error) {
+    console.log(error);
+    console.error("Error up loading image:", error);
+    res.json({
+      success: false,
+      message: "Error occured during image upload",
+    });
+  }
+};
 
 const createUser = async (req, res) => {
   try {
-    const { email, name, age, phone, role } = req.body;
+    const { email, name, age, phone, role, image, maritalStatus, spouse } =
+      req.body;
 
-    if (!age || !name || !email) {
+    if (!age || !name || !email || !image || !maritalStatus) {
       return res.status(400).json({
         message: "all Fields are required age, name and email",
       });
@@ -22,7 +44,16 @@ const createUser = async (req, res) => {
         .json({ message: "Invalid age — must be a number." });
     }
 
-    const newUser = new User({ email, name, age, phone, role });
+    const newUser = new User({
+      email,
+      name,
+      age,
+      phone,
+      role,
+      image,
+      maritalStatus,
+      spouse,
+    });
 
     await newUser.save();
 
@@ -147,4 +178,5 @@ module.exports = {
   updateUser,
   deleteUser,
   deleteUnderageUsers,
+  handleImageUpload,
 };

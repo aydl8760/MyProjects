@@ -6,7 +6,13 @@ import { useEffect } from "react";
 import axios from "axios";
 import FilterUsers from "../components/SearchUsers/FilterUsers";
 import SearchUsers from "../components/SearchUsers/SearchTerm.jsx";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import {
+  Link,
+  replace,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 
 export default function HomePage() {
   const [filters, setFilters] = useState({
@@ -48,11 +54,19 @@ export default function HomePage() {
           `http://localhost:5007/api/users/search?${searchQuery}`
         );
         if (response) {
-          setSearchResult(response.data);
+          setSearchResult(response?.data);
           setLoading(false);
         }
       } catch (error) {
         console.log("error during data fetch", error);
+        setLoading(false);
+        setSearchResult({
+          name: "",
+          role: "",
+          minAge: "",
+          maxAge: "",
+        });
+      } finally {
         setLoading(false);
       }
     };
@@ -67,8 +81,8 @@ export default function HomePage() {
     if (filters.maxAge) params.set("maxAge", filters.maxAge);
     if (filters.role) params.set("role", filters.role);
 
-    navigate(`/?${params.toString()}`);
-  }, [filters, navigate]);
+    navigate(`/?${params.toString()}`, { replace: true });
+  }, [filters]);
 
   if (loading) {
     <p className="text-center text-2xl mt-20 md:mt-28">Loading....</p>;

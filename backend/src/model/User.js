@@ -19,6 +19,20 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     role: { type: String, enum: ["admin", "user"], default: "user" },
+    image: {
+      type: String,
+      required: true,
+    },
+    maritalStatus: {
+      type: String,
+      enum: ["single", "married", "divorced", "widowed"],
+      require: true,
+    },
+    spouse: {
+      name: String,
+      age: Number,
+      phone: String,
+    },
   },
   { timestamps: true }
 );
