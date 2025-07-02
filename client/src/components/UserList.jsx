@@ -1,6 +1,8 @@
 import { FaEnvelope } from "react-icons/fa";
 import { HiOutlineX } from "react-icons/hi";
+import { useNavigate } from "react-router";
 export default function UserList({ userData }) {
+  const navigate = useNavigate();
   return (
     <>
       {userData?.length > 0 &&
@@ -12,8 +14,9 @@ export default function UserList({ userData }) {
           >
             <div className="flex items-center justify-start gap-2  ">
               <img
-                src="https://www.shutterstock.com/image-photo/shocked-concerned-cellphone-user-girl-260nw-2153829281.jpg"
+                src={user?.image}
                 className="size-14 rounded-full object-cover"
+                onClick={() => navigate(`/details/${user?._id}`)}
               />
 
               <div className="">
