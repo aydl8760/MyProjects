@@ -100,6 +100,12 @@ export default function HomePage() {
           >
             <FaUserPlus /> Add user
           </Link>
+          <Link
+            to="/blogs"
+            className="p-2 bg-white rounded-lg flex items-center gap-2"
+          >
+            <FaUserPlus /> All Blog
+          </Link>
           <SearchUsers filters={filters} />
           <FilterUsers setFilters={setFilters} filters={filters} />
         </div>
