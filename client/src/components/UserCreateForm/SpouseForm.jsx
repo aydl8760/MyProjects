@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function SpouseForm({ formData, handleInputChange }) {
   return (
     <>
@@ -10,7 +12,7 @@ export default function SpouseForm({ formData, handleInputChange }) {
               name="spouse.name"
               value={formData?.spouse.name || ""}
               onChange={handleInputChange}
-              className="p-2 rounded-lg bg-white"
+              className="p-2 rounded-lg border shadow-sm"
             />
           </div>
 
@@ -21,7 +23,7 @@ export default function SpouseForm({ formData, handleInputChange }) {
               name="spouse.age"
               value={formData?.spouse.age || ""}
               onChange={handleInputChange}
-              className="p-2 rounded-lg bg-white"
+              className="p-2 rounded-lg border shadow-sm"
             />
           </div>
           <div className="flex flex-col w-36 ">
@@ -31,7 +33,7 @@ export default function SpouseForm({ formData, handleInputChange }) {
               name="spouse.phone"
               value={formData?.spouse.phone || ""}
               onChange={handleInputChange}
-              className="p-2 rounded-lg bg-white"
+              className="p-2 rounded-lg border shadow-sm"
             />
           </div>
         </div>

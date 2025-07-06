@@ -1,17 +1,44 @@
-import { FaEnvelope } from "react-icons/fa";
-import { HiOutlinePencilAlt, HiOutlineX } from "react-icons/hi";
+import { FaEnvelope, FaPlus, FaTrash } from "react-icons/fa";
+import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineX } from "react-icons/hi";
 import { Link, useNavigate } from "react-router";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+
 export default function UserList({ userData }) {
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setUsers(userData); // Initialize from props
+  }, [userData]);
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (!confirmed) return;
+
+    try {
+      await axios.delete(`http://localhost:5007/api/users/${id}`);
+      toast.success("User deleted successfully");
+
+      // 🔁 Remove from UI
+      setUsers((prev) => prev.filter((user) => user._id !== id));
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error("Failed to delete user");
+    }
+  };
   return (
     <>
-      {userData?.length > 0 &&
-        userData.map((user) => (
+      {users?.length > 0 &&
+        users.map((user) => (
           <div
             key={user?._id}
-            className="relative bg-white rounded-lg p-2 flex items-center justify-between gap-2 cursor-pointer group"
+            className="relative bg-white rounded-lg p-4 border flex items-center justify-between gap-2 cursor-pointer group shadow-lg"
           >
-            <div className="flex items-center justify-start gap-2  ">
+            <div className="flex items-end justify-start gap-4  ">
               <img
                 src={user?.image}
                 className="size-14 rounded-full object-cover"
@@ -19,20 +46,21 @@ export default function UserList({ userData }) {
               />
 
               <div className="">
-                <h2 className="font-bold text-lg">{user?.name}</h2>
-                <p className="text-blue-500 flex gap-1 items-center hover:underline cursor-pointer">
-                  <FaEnvelope /> {user?.email}
-                </p>
+                <div className="flex flex-col">
+                  <h2 className="font-bold text-lg">
+                    {user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1)}
+                  </h2>
+                  <p className="hover:text-blue-500 hover:underline  cursor-pointer ">
+                    {user?.email}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className=" absolute top-0 right-0 px-2 py-1 hidden group-hover:block">
-              <div className="flex items-center gap-2">
-                <Link to={`/update/${user?._id}`}>
-                  <HiOutlinePencilAlt />
-                </Link>
+            <div>
+              <div className="flex items-center gap-2 mt-7">
                 <button onClick={() => handleDelete(user._id)}>
-                  <HiOutlineX />
+                  <HiOutlineTrash />
                 </button>
               </div>
             </div>

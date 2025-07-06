@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import BackButton from "../components/common/BackButton";
 
 export default function AllBlogLists() {
   const [blogs, setBlogs] = useState([]);
@@ -20,12 +21,7 @@ export default function AllBlogLists() {
   return (
     <div className="max-w-6xl mx-auto mt-10 flex flex-col gap-4">
       <div>
-        <button
-          onClick={() => navigate("/")}
-          className="flex items-center gap-1 bg-gray-300 p-2 rounded-lg "
-        >
-          <FaAngleDoubleLeft /> Back
-        </button>
+        <BackButton />
       </div>
 
       <div className="grid grid-cols-3 gap-4">
@@ -41,7 +37,7 @@ export default function AllBlogLists() {
 
                 <p className="p-2">{blog?.content}</p>
                 <div className="text-right px-3">
-                  <p>auther: {blog?.user?.name}</p>
+                  <p>By: {blog?.user?.name}</p>
                 </div>
               </div>
             </div>

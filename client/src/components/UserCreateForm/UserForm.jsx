@@ -1,41 +1,36 @@
+import React from "react";
 import SpouseForm from "./SpouseForm";
 
 export default function UserForm({ formData, handleInputChange }) {
   return (
-    <>
-      <div className="flex flex-col">
-        <label className="font-medium text-gray-700">Name:</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter your Name..."
-          className="p-3 bg-white rounded-lg"
-          value={formData?.name || ""}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="flex flex-col">
-        <label className="font-medium text-gray-700">Email:</label>
-        <input
-          type="text"
-          name="email"
-          placeholder="Enter your Email..."
-          className="p-3 bg-white rounded-lg"
-          value={formData?.email || ""}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="flex flex-col">
-        <label className="font-medium text-gray-700">Mobile:</label>
-        <input
-          type="text"
-          name="phone"
-          placeholder="Enter your phone Number..."
-          className="p-3 bg-white rounded-lg"
-          value={formData?.phone || ""}
-          onChange={handleInputChange}
-        />
-      </div>
+    <div className="flex flex-col gap-5">
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter your Name..."
+        className="p-3 rounded-lg border shadow-sm"
+        value={formData?.name || ""}
+        onChange={handleInputChange}
+      />
+
+      <input
+        type="text"
+        name="email"
+        placeholder="Enter your Email..."
+        className="p-3 rounded-lg border shadow-sm"
+        value={formData?.email || ""}
+        onChange={handleInputChange}
+      />
+
+      <input
+        type="text"
+        name="phone"
+        placeholder="Enter your phone Number..."
+        className="p-3  rounded-lg border shadow-sm"
+        value={formData?.phone || ""}
+        onChange={handleInputChange}
+      />
+
       <div className="flex gap-8">
         <div className="flex flex-col w-36">
           <label className="font-medium text-gray-700">Age:</label>
@@ -43,7 +38,7 @@ export default function UserForm({ formData, handleInputChange }) {
             type="number"
             name="age"
             placeholder="Enter your age"
-            className="p-3 bg-white rounded-lg"
+            className="p-3  rounded-lg border shadow-sm"
             value={formData?.age || ""}
             onChange={handleInputChange}
           />
@@ -78,6 +73,6 @@ export default function UserForm({ formData, handleInputChange }) {
         </div>
       </div>
       <SpouseForm formData={formData} handleInputChange={handleInputChange} />
-    </>
+    </div>
   );
 }

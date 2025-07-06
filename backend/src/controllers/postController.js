@@ -52,8 +52,31 @@ const getPostsByUser = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const deletedpost = await Post.findByIdAndDelete(req.params.id);
+    if (!deletedpost)
+      return res.status(404).json({ message: "Blog not found" });
+
+    await User.findByIdAndUpdate(deletedpost.user, {
+      $inc: { postCount: -1 },
+    });
+
+    await User.findByIdAndUpdate(deletedpost.user, {
+      $inc: { postCount: -1 },
+    });
+
+    await User.findByIdAndUpdate(deletedpost.user, {
+      $max: { postCount: 0 },
+    });
+
+    res.json({ message: "Blog deleted successfully" });
+  } catch (error) {}
+};
+
 module.exports = {
   createPost,
   getAllBlogs,
   getPostsByUser,
+  deletePost,
 };

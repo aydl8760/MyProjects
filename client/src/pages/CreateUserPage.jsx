@@ -3,6 +3,7 @@ import { FaAngleDoubleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
 import CreateUserForm from "../components/UserCreateForm/CreateUserForm";
+import BackButton from "../components/common/BackButton";
 
 const intialState = {
   name: "",
@@ -28,14 +29,9 @@ export default function CreateUserPage() {
 
   return (
     <div className="w-full  ">
-      <div className="w-[550px] mx-auto bg-gray-100 p-6 mt-8 mb-14 rounded-lg  ">
-        <button
-          onClick={() => navigate("/")}
-          className="flex items-center gap-1 bg-gray-300 p-2 rounded-lg "
-        >
-          <FaAngleDoubleLeft /> Back
-        </button>
-        <div className="mt-6 flex flex-col  gap-4 ">
+      <div className="w-[600px] mx-auto border shadow-lg p-6 mt-8 mb-14 rounded-lg  ">
+        <BackButton />
+        <div className="mt-6 max-w-[500px] mx-auto flex flex-col  gap-4 ">
           {!uploading && formData.image ? (
             <img
               src={formData.image}

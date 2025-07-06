@@ -60,16 +60,6 @@ export default function CreatePostPage() {
           onSubmit={handleSubmit}
           className="flex flex-col w-full mt-4 gap-4  "
         >
-          <div className="flex flex-col">
-            <label>user</label>
-            <input
-              disabled
-              type="text"
-              name="user"
-              value={formData.user}
-              className="bg-gray-200 p-2 rounded-lg border"
-            />
-          </div>
           <input
             type="text"
             name="title"

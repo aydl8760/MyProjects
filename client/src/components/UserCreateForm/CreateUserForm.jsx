@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
+import UploadProfileImage from "../UploadProfileImage";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import toast from "react-hot-toast";
 import UserForm from "./UserForm";
-import UploadProfileImage from "../UploadProfileImage";
+import toast from "react-hot-toast";
 
 export default function CreateUserForm({
   setUploading,
+  uploading,
   setFormData,
   formData,
 }) {
@@ -67,7 +68,7 @@ export default function CreateUserForm({
     }
   };
   return (
-    <form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
+    <form onSubmit={handleFormSubmit} className="flex flex-col gap-5">
       <UploadProfileImage
         setFormData={setFormData}
         setUploading={setUploading}
